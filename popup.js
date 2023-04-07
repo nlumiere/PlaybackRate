@@ -1,4 +1,23 @@
+function setCustomPlaybackSpeed(speed) {
+  document.getElementById("playbackRateSlider").value = speed;
+  document.getElementById("playbackrate").innerHTML =
+    "Playback Speed: " + speed.toString();
+  chrome.storage.local.set({
+    customPlaybackRate: parseFloat(speed),
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  chrome.storage.local.get(["customPlaybackRate"]).then((result) => {
+    let speed = 1;
+    if (result) {
+      speed = parseFloat(result.customPlaybackRate);
+      document.getElementById("playbackRateSlider").value = speed;
+      document.getElementById("playbackrate").innerHTML =
+        "Playback Speed: " + speed.toString();
+    }
+  });
+
   const ACTION_MESSAGE_LENGTH = 8;
   document
     .getElementById("playbackRateSlider")
@@ -10,9 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("playbackrate").innerHTML =
           "Playback Speed: " + newValue.toString();
         document.addEventListener("mouseup", () => {
-          chrome.storage.local.set({
-            customPlaybackRate: parseFloat(newValue),
-          });
+          setCustomPlaybackSpeed(newValue);
         });
       });
     });
