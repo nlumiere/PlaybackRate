@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "PlaybackRate",
   "description": "This is a sample Chrome extension with a popup.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "permissions": ["activeTab", "tabs", "storage", "scripting"],
   "action": {
     "default_popup": "popup.html",
